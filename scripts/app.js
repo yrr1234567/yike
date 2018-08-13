@@ -1,5 +1,5 @@
 // 创建app应用模块
-var yike = angular.module("yike",[]);
+var yike = angular.module("yike",["ctrls","ngRoute"]);//ctrls模块是自己创建的,来定义各种各样的控制器
 // console.log(111);
 /* 
     调用run方法:
@@ -25,7 +25,7 @@ yike.run(["$rootScope",function($rootScope){
         // console.log(dd);
         //2.遍历dd,将每一个dd设置位移,当$rootScope.left = true;需要向右移动,false时向左移动
         if($rootScope.left){
-            // 导航栏向右显示(位移量为0))
+            // 使得导航栏向右显示(位移量为0))
             for(var i=0; i<dd.length; i++) {
                 dd[i].style.transitionDuration = (i + 1) * 0.15 + 's';
                 dd[i].style.transitionProperty = 'all';
@@ -46,3 +46,31 @@ yike.run(["$rootScope",function($rootScope){
 
     }
 }]);
+//修复锚点值的改变
+yike.config(["$locationProvider",function($locationProvider){
+    $locationProvider.hashPrefix("");
+}])
+//配置路由
+yike.config(["$routeProvider",function($routeProvider){
+    $routeProvider.when("/",{
+        redirectTo:"/index"//跳转到/index去处理
+    }).when("/index",{
+        templateUrl:"./views/test.html",//要在ng-view区域显示的视图,以index.html的路径为主
+        controller:"index"//调用index控制器
+    }).when("/older",{
+        templateUrl:"./views/test.html",
+        controller:"older"
+    }).when("/author",{
+        templateUrl:"./views/test.html",
+        controller:"author"
+    }).when("/category",{
+        templateUrl:"./views/test.html",
+        controller:"category"
+    }).when("/favourite",{
+        templateUrl:"./views/test.html",
+        controller:"favourite"
+    }).when("/settings",{
+        templateUrl:"./views/test.html",
+        controller:"settings"
+    })
+}])
