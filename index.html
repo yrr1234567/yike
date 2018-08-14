@@ -40,12 +40,18 @@
 			<!-- 头部 -->
 			<div ng-class="{header:true,collapse:left}" ng-click="toggle();">
 				<a href="javascript:;" class="menu icon-menu"></a>
-				<h2>今日一刻</h2>
+				<h2>{{title}}</h2>
 				<a href="javascript:;" class="search icon-search"></a>
 			</div>
 			<!-- 主体 -->
 			<div ng-class="{body:true,collapse:left}">
-				<div ng-view></div>
+				<div ng-show="show">
+					<!-- 动态加载图,获取数据时显示,拿到数据不显示 -->
+					<img src="./public/images/loading.gif">
+				</div>
+				<div ng-view>
+
+				</div>
 			</div>
 		</div>
 	</div>

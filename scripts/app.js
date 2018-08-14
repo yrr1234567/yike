@@ -58,19 +58,19 @@ yike.config(["$routeProvider",function($routeProvider){
         templateUrl:"./views/list.html",//要在ng-view区域显示的视图,以index.html的路径为主
         controller:"index"//调用index控制器
     }).when("/older",{
-        templateUrl:"./views/test.html",
+        templateUrl:"./views/list.html",
         controller:"older"
-    }).when("/author",{
-        templateUrl:"./views/test.html",
+    }).when("/author",{//???
+        templateUrl:"./views/author.html",
         controller:"author"
     }).when("/category",{
-        templateUrl:"./views/test.html",
+        templateUrl:"./views/category.html",
         controller:"category"
     }).when("/favourite",{
-        templateUrl:"./views/test.html",
+        templateUrl:"./views/favourite.html",
         controller:"favourite"
     }).when("/settings",{
-        templateUrl:"./views/test.html",
+        templateUrl:"./views/settings.html",
         controller:"settings"
     })
 }])

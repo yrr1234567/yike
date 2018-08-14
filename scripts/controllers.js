@@ -13,38 +13,70 @@ angular.module("ctrls",[])
     ]
 }])
 //创建index控制器
-.controller("index",["$scope","$rootScope","$http",function($scope,$rootScope,$http){
+.controller("index",["$scope","$rootScope","$http","$filter",function($scope,$rootScope,$http,$filter){
     //模拟数据
     $scope.msg = "控制器获取index的数据";
     //绑定num,判定被点击标题被选中状态
     $rootScope.num = 0;//  $scope.num = 0;不在navs的控制范围下下,不起作用
+    //绑定标题栏
+    $rootScope.title = '今日一课';
+    //还未获取到数据,显示加载数据
+    $rootScope.show = true;
+    //获取当前时间,格式化时间
+    var now = $filter("date")(new Date(),"yyyy-M-d");
+    $scope.now = now;
     //向后台发送请求,使用到$http
     $http({
         //不能直接发送给服务器,会产生跨域问题moment.douban.com
-        // url:"https://moment.douban.com/api/stream/date/2017-5-11?alt=json&apikey=0bcf52793711959c236df76ba534c0d4&app_version=1.7.4&douban_udid=d623045db9fcb0d5243174c1bf1a675f887047c0&format=full&udid=9a34d8b038ff38971050199b0c5ee9c60c6d1ca3&version=6"  
+        // url:"https://moment.douban.com/api/stream/date/2017-5-11?alt=json&699b0c5ee9c60c6d1ca3&version=6"  
         //解决方法:从后台发送请求
-        url:"./model/index.php"//注意路径是根据index.html来的
+        url:"./model/index.php",//注意路径是根据index.html来的
+        params:{time:now}
     }).then(function(result){//success方法已经被淘汰,使用then方法来替代
+        console.log(result.data);
+        //已经获取到数据,加载到图片隐藏不显示
+        $rootScope.show = false;
         $scope.posts = result.data.posts;
     })
 }])
-.controller("older",["$scope","$rootScope",function($scope,$rootScope){
-    $scope.msg = "控制器获取older的数据";
+.controller("older",["$scope","$rootScope","$http","$filter",function($scope,$rootScope,$http,$filter){
+    // $scope.msg = "控制器获取older的数据";
     $rootScope.num = 1;
+    $rootScope.title = '往期内容';
+    $rootScope.show = true;
+    var now = new Date();
+    now.setDate(now.getDate()-1);
+    now = $filter("date")(now,"yyyy-M-d");
+    $scope.now = now;
+    $http({
+        url:"./model/older.php",
+        params:{time:now}
+    }).then(function(result){
+        // console.log(result.data);
+        $rootScope.show = false;
+        $scope.posts = result.data.posts;
+    })
 }])
-.controller("author",["$scope","$rootScope",function($scope,$rootScope){
-    $scope.msg = "控制器获取author的数据";
+.controller("author",["$scope","$rootScope","$http","$filter",function($scope,$rootScope,$http,$filter){
+    // $scope.msg = "控制器获取author的数据";
     $rootScope.num = 2;
+    $rootScope.title = '热门作者';
+    $rootScope.show = true;
+    $http({
+        url:"./model/author.php"
+    }).then(function(result){
+        // $rootScope.author = JSON.parse(result.data);
+        console.log(result);
+        $rootScope.show = false;
+      
+    })
 }])
 .controller("category",["$scope","$rootScope",function($scope,$rootScope){
-    $scope.msg = "控制器获取category的数据";
-    $rootScope.num = 3;
+    $rootScope.title = "栏目浏览";
 }])
 .controller("favourite",["$scope","$rootScope",function($scope,$rootScope){
-    $scope.msg = "控制器获取favourite的数据";
-    $rootScope.num = 4;
+    $rootScope.title = "我的喜欢";
 }])
 .controller("settings",["$scope","$rootScope",function($scope,$rootScope){
-    $scope.msg = "控制器获取settings的数据";
-    $rootScope.num = 5;
+    $rootScope.title = "设置";
 }])
