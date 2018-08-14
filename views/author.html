@@ -1,6 +1,6 @@
 
 	<!-- 主体 -->
-	<div class="body">
+<!-- 	<div class="body">
 		<dl class="author">
 			<dt>本周推荐</dt>
 			<dd ng-repeat="author in authors">
@@ -13,5 +13,30 @@
 				</div>
 			</dd>
 		</dl>
-	</div>
+	</div> -->
 
+	<!-- 主体 -->
+	<div class="body">
+			<dl class="author">
+				<dt>本周推荐</dt>
+				<dd ng-repeat="auth in authors1">
+					<div class="avatar">
+						<img ng-src="{{auth.large_avatar}}" alt="">
+					</div>
+					<div class="info">
+						<h5>{{auth.name}}</h5>
+						<p>{{auth.alt}}</p>
+					</div>
+				</dd>
+				<dt>热门作者</dt>
+				<dd ng-repeat="num in authors2">
+					<div class="avatar">
+						<img src="{{num.avatar}}" alt="">
+					</div>
+					<div class="info">
+						<h5>{{num.name}}</h5>
+						<p>{{num.alt}}</p>
+					</div>
+				</dd>
+			</dl>
+		</div>

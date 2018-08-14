@@ -57,7 +57,7 @@ angular.module("ctrls",[])
         $scope.posts = result.data.posts;
     })
 }])
-.controller("author",["$scope","$rootScope","$http","$filter",function($scope,$rootScope,$http,$filter){
+/* .controller("author",["$scope","$rootScope","$http","$filter",function($scope,$rootScope,$http,$filter){
     // $scope.msg = "控制器获取author的数据";
     $rootScope.num = 2;
     $rootScope.title = '热门作者';
@@ -70,7 +70,22 @@ angular.module("ctrls",[])
         $rootScope.show = false;
       
     })
-}])
+}]) */
+//创建author 控制器
+.controller("author",["$scope","$rootScope","$http",function($scope,$rootScope,$http){
+    // $scope.msg="热门作者author的数据";
+    $rootScope.num=2;
+    $rootScope.title="热门作者";
+    $http({
+      url:"./model/author.php"/* 如果不更改时间,就不传参 */
+    }).then(function(result){
+      console.log(result.data);
+      $rootScope.show=false;
+      $scope.authors1=result.data[0].authors;/* 只想要数据中posts数组 */
+      //console.log(result.data[0].authors);
+     $scope.authors2=result.data[1].authors;/* 只想要数据中posts数组 */
+    })
+  }])
 .controller("category",["$scope","$rootScope",function($scope,$rootScope){
     $rootScope.title = "栏目浏览";
 }])
